@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- StageName:"city:城市"	"field:遗迹" "War camp:沙漠" Seaport:海港 Deserted villages:部落 Tianmenshan:天门山 -->
+<Nodes>
+	<Node ID="1" MapName="" WeatherId="" PassCondition="" StartPosName="" PassTime="" AILevel="" Wind="" />
+	<Node ID="1" MapName="" WeatherId="" PassCondition="" StartPosName="" PassTime="" AILevel="" Wind="" />
+</Nodes>

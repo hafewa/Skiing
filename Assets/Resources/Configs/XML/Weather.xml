@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Nodes>
+	<Node ID="1" Name="Day" SkyBox="DaySky" AmbientMode="3" AmbientSkyColor="0.764706,0.882353,1" LightColor="255,255,255,255" LightIntensity="0.5" Fog="1" FogColor="159,227,236,255"/>
+	<Node ID="2" Name="Dusk" SkyBox="DuskSky" AmbientMode="3" AmbientSkyColor="1,0.8470589,0.7372549" LightColor="255,255,255,255" LightIntensity="0.85" Fog="1" FogColor="241,175,105,255"/>
+	<Node ID="3" Name="城市-Night" SkyBox="NightSky" AmbientMode="3" AmbientSkyColor="0.1019608,0.4235294,0.5803922" LightColor="84,137,255,255" LightIntensity="1" Fog="1" FogColor="23,133,214,255"/>
+	<Node ID="4" Name="沙漠-Night" SkyBox="NightSky" AmbientMode="3" AmbientSkyColor="0.1019608,0.1254902,0.5803922" LightColor="84,137,255,255" LightIntensity="1" Fog="1" FogColor="23,133,214,255"/>
+	<Node ID="5" Name="河谷-Night" SkyBox="NightSky" AmbientMode="3" AmbientSkyColor="0.09411764,0.5215687,0.4352942" LightColor="84,137,255,255" LightIntensity="1" Fog="1" FogColor="23,133,214,255"/>
+	<Node ID="6" Name="野外-Night" SkyBox="NightSky" AmbientMode="1" AmbientSkyColor="0.5058824,0.3921569,0.01960784" AmbientEquatorColor="0.3764706,0.3411765,0.2352941" AmbientGroundColor="0.1921569,0.1529412,0.07843138" LightColor="84,137,255,255" LightIntensity="1" Fog="1" FogColor="23,133,214,255"/>
+	<Node ID="7" Name="城市-Dusk" SkyBox="DuskSky" AmbientMode="3" AmbientSkyColor="1,0.572549,0.1490196" LightColor="255,255,255,255" LightIntensity="1.2" Fog="1" FogColor="241,175,105,255"/>
+</Nodes>

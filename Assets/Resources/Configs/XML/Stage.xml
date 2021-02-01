@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Nodes>
+	<Node ID="1" MapName="Snow Mountain8" WeatherId="1" PassCondition="8" StartPosName="0" PassTime="-1" AILevel="1" Wind="0.04"/>
+	<Node ID="2" MapName="Snow Mountain6" WeatherId="1" PassCondition="8" StartPosName="0" PassTime="-1" AILevel="2" Wind="0.06"/>
+	<Node ID="3" MapName="Snow Mountain9" WeatherId="1" PassCondition="8" StartPosName="0" PassTime="-1" AILevel="3" Wind="0.07"/>
+	<Node ID="4" MapName="Snow Mountain7" WeatherId="1" PassCondition="8" StartPosName="0" PassTime="-1" AILevel="4" Wind="0.02"/>
+	<Node ID="5" MapName="Snow Mountain5" WeatherId="3" PassCondition="8" StartPosName="0" PassTime="-1" AILevel="5" Wind="0.07"/>
+	<Node ID="6" MapName="Snow Mountain8" WeatherId="1" PassCondition="7" StartPosName="2" PassTime="-1" AILevel="6" Wind="0.11"/>
+	<Node ID="7" MapName="Snow Mountain6" WeatherId="1" PassCondition="8" StartPosName="1" PassTime="35" AILevel="7" Wind="0.01"/>
+	<Node ID="8" MapName="Snow Mountain9" WeatherId="3" PassCondition="7" StartPosName="2" PassTime="-1" AILevel="8" Wind="0.09"/>
+	<Node ID="9" MapName="Snow Mountain7" WeatherId="1" PassCondition="7" StartPosName="1" PassTime="-1" AILevel="9" Wind="0.09"/>
+	<Node ID="10" MapName="Snow Mountain5" WeatherId="1" PassCondition="8" StartPosName="1" PassTime="39" AILevel="10" Wind="0.04"/>
+	<Node ID="11" MapName="Snow Mountain8" WeatherId="3" PassCondition="6" StartPosName="1" PassTime="-1" AILevel="11" Wind="0.12"/>
+	<Node ID="12" MapName="Snow Mountain6" WeatherId="1" PassCondition="6" StartPosName="2" PassTime="-1" AILevel="12" Wind="0.05"/>
+	<Node ID="13" MapName="Snow Mountain9" WeatherId="3" PassCondition="8" StartPosName="1" PassTime="37" AILevel="13" Wind="0.09"/>
+	<Node ID="14" MapName="Snow Mountain7" WeatherId="1" PassCondition="6" StartPosName="2" PassTime="-1" AILevel="14" Wind="0.1"/>
+	<Node ID="15" MapName="Snow Mountain5" WeatherId="3" PassCondition="8" StartPosName="2" PassTime="30" AILevel="15" Wind="0.07"/>
+</Nodes>

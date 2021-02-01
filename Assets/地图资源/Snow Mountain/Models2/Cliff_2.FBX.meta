@@ -1,0 +1,135 @@
+fileFormatVersion: 2
+guid: 9aa0fdcc8ef6d5a4088479e669cd4170
+timeCreated: 1610006002
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cliff_2_2
+    100004: RockFormation11
+    100006: RockFormation9
+    100008: RockFormation_1
+    100010: RockFormation_2
+    100012: RockFormation_3
+    100014: RockFormation_4
+    100016: RockFormation_5
+    100018: RockFormation_6
+    400000: //RootNode
+    400002: Cliff_2_2
+    400004: RockFormation11
+    400006: RockFormation9
+    400008: RockFormation_1
+    400010: RockFormation_2
+    400012: RockFormation_3
+    400014: RockFormation_4
+    400016: RockFormation_5
+    400018: RockFormation_6
+    2100000: MAT_DESERT1
+    2300000: Cliff_2_2
+    2300002: RockFormation11
+    2300004: RockFormation9
+    2300006: RockFormation_1
+    2300008: RockFormation_2
+    2300010: RockFormation_3
+    2300012: RockFormation_4
+    2300014: RockFormation_5
+    2300016: RockFormation_6
+    3300000: Cliff_2_2
+    3300002: RockFormation11
+    3300004: RockFormation9
+    3300006: RockFormation_1
+    3300008: RockFormation_2
+    3300010: RockFormation_3
+    3300012: RockFormation_4
+    3300014: RockFormation_5
+    3300016: RockFormation_6
+    4300000: Cliff_2_2
+    4300002: RockFormation_4
+    4300004: RockFormation11
+    4300006: RockFormation_3
+    4300008: RockFormation9
+    4300010: RockFormation_2
+    4300012: RockFormation_1
+    4300014: RockFormation_5
+    4300016: RockFormation_6
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

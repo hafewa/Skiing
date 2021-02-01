@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- AmbientMode:SkyBox=0; Gradient=1; Color=3; -->
+<Nodes>
+	<Node ID="1" Name="Day" SkyBox="" AmbientMode="" AmbientSkyColor="" AmbientEquatorColor="" AmbientGroundColor="" LightColor="" LightIntensity="" Fog="" FogColor="" />
+	<Node ID="1" Name="Day" SkyBox="" AmbientMode="" AmbientSkyColor="" AmbientEquatorColor="" AmbientGroundColor="" LightColor="" LightIntensity="" Fog="" FogColor="" />
+</Nodes>
