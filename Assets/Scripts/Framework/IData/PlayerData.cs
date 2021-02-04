@@ -43,6 +43,8 @@ public class PlayerData : IData
         PrefsTool.SetGoldEarningLevel(lv, userID);
     }
 
+    #region 身体皮肤
+
     public int GetPlayerSkinID(string userID = "1001") {
         return PrefsTool.GetPlayerSkinID(userID);
     }
@@ -60,6 +62,32 @@ public class PlayerData : IData
         }
     }
 
+    #endregion
+
+
+
+    #region 滑雪板皮肤
+
+    public int GetPlayerSkisID(string userID = "1001") {
+        return PrefsTool.GetPlayerSkisID(userID);
+    }
+    public void SetPlayerSkisID(int id, string userID = "1001") {
+        PrefsTool.SetPlayerSkisID(id, userID);
+    }
+
+    public string[] GetOwnedSkisIDs(string userID = "1001")
+    {
+        return PrefsTool.GetOwnedSkisIDs(userID).Split(',');
+    } 
+    public void SetOwnedSkisIDs(int skinID, string userID = "1001") {
+        var array = GetOwnedSkisIDs(userID);
+        if (!array.Contains(skinID.ToString())) {
+            PrefsTool.SetOwnedSkisIDs(string.Join(",", array) + "," + skinID, userID);
+        }
+    }
+
+    #endregion
+
     public string[] GetOwnedStuntIDs(string userID = "1001") {
         return PrefsTool.GetOwnedStuntIDs(userID).Split(',');
     }
@@ -72,4 +100,6 @@ public class PlayerData : IData
     public bool HasStunt(int stuntID, string userID = "1001") {
         return GetOwnedStuntIDs(userID).Contains(stuntID.ToString());
     }
+    
+    
 }

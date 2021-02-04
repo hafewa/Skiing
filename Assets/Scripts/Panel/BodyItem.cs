@@ -7,7 +7,6 @@ public class BodyItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandler
 {
     public Image Dot;
     public RolePanel rolePanel;
-    public Text skinName;
     public Transform Lock;
     public SkinModel skinModel;
     public Button BuyBtn;
@@ -35,12 +34,12 @@ public class BodyItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandler
         audioMng.BtnClick();
         var playerGold = playerData.GetPlayerGold();
         if (skinModel.Price > playerGold) {
-            //MessageTool.ShowMessage("金币不足!", 0.5f);
-            // rolePanel.OpenGetGoldPanel();
+            // MessageTool.ShowMessage("金币不足!", 0.5f);
+             rolePanel.OpenGetGoldPanel();
         }
         else {
             //TODO弹出购买界面
-            // rolePanel.OpenBuyPanel(BuyType.Skin, skinModel.Price, skinModel.ID, BuyBtn);
+            rolePanel.OpenBuyPanel(BuyType.Body, skinModel.Price, skinModel.ID, BuyBtn);
         }
     }
 
@@ -48,9 +47,7 @@ public class BodyItem : MonoBehaviour, IPointerClickHandler, IPointerDownHandler
         //var skinModel = XmlTool.Instance.skinCfg[skinID];
         if (skinModel == null) return;
 
-        skinName.text = skinModel.Name;
-
-        SkinIcon.sprite = Resources.Load<Sprite>("UI/Skin/" + skinModel.IconName);
+        SkinIcon.sprite = Resources.Load<Sprite>("UI/Body/" + skinModel.IconName);
 
         Lock.SetActive(passStageCount < skinModel.UnlockStage);
 

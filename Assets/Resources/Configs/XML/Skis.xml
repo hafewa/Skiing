@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Nodes>
+	<Node ID="1" Name="滑雪板1" TextureName="ban-001-uv" IconName="1" RateMPH="2" RateG="3.5" RateX="1" UnlockStage="0" Price="0"/>
+	<Node ID="2" Name="滑雪板2" TextureName="ban-002-uv" IconName="2" RateMPH="4" RateG="3.6" RateX="1" UnlockStage="10" Price="10000"/>
+	<Node ID="3" Name="滑雪板3" TextureName="ban-003-uv" IconName="3" RateMPH="6" RateG="3.7" RateX="1" UnlockStage="25" Price="20000"/>
+	<Node ID="4" Name="滑雪板4" TextureName="ban-004-uv" IconName="4" RateMPH="8" RateG="3.8" RateX="1" UnlockStage="40" Price="30000"/>
+	<Node ID="5" Name="滑雪板5" TextureName="ban-005-uv" IconName="5" RateMPH="10" RateG="3.9" RateX="1" UnlockStage="60" Price="45000"/>
+	<Node ID="6" Name="滑雪板6" TextureName="ban-006-uv" IconName="6" RateMPH="12" RateG="3.10" RateX="1" UnlockStage="80" Price="60000"/>
+	<Node ID="7" Name="滑雪板7" TextureName="ban-007-uv" IconName="7" RateMPH="14" RateG="3.11" RateX="1" UnlockStage="100" Price="75000"/>
+	<Node ID="8" Name="滑雪板8" TextureName="ban-008-uv" IconName="8" RateMPH="16" RateG="3.12" RateX="1" UnlockStage="120" Price="90000"/>
+	<Node ID="9" Name="滑雪板9" TextureName="ban-009-uv" IconName="9" RateMPH="17" RateG="3.13" RateX="1" UnlockStage="120" Price="90001"/>
+	<Node ID="10" Name="滑雪板10" TextureName="ban-010-uv" IconName="10" RateMPH="18" RateG="3.14" RateX="1" UnlockStage="120" Price="90002"/>
+	<Node ID="11" Name="滑雪板11" TextureName="ban-011-uv" IconName="11" RateMPH="19" RateG="3.15" RateX="1" UnlockStage="120" Price="90003"/>
+	<Node ID="12" Name="滑雪板12" TextureName="ban-012-uv" IconName="12" RateMPH="20" RateG="3.16" RateX="1" UnlockStage="120" Price="90004"/>
+	<Node ID="13" Name="滑雪板13" TextureName="ban-013-uv" IconName="13" RateMPH="21" RateG="3.17" RateX="1" UnlockStage="120" Price="90005"/>
+	<Node ID="14" Name="滑雪板14" TextureName="ban-014-uv" IconName="14" RateMPH="22" RateG="3.18" RateX="1" UnlockStage="120" Price="90006"/>
+</Nodes>

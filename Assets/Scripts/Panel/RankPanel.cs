@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class RankPanel : BasePanel
 {
+    public Text GoldTxt;
+    public Text GoldTxt2;
+    public Text GoldDoubleTxt;
+    
+    int rewardGold;
+    
     public Transform[] items;
 
     // public Sprite rankBg1;
@@ -51,6 +57,7 @@ public class RankPanel : BasePanel
         audioMng.PlayAudioEffect(MusicType.GetGold);
 
         Player.Instance.ReStart();
+        playerData.AddPlayerGold(rewardGold * times);
 
         if (times == 2) {
             
@@ -92,6 +99,31 @@ public class RankPanel : BasePanel
 
             // items[i].transform.GetComponent<Image>().sprite = temp;
             items[i].transform.Find("NameTxt").GetComponent<Text>().text = nameStr;
+            
+            int passStageGold = MathTool.GetPassStageGold(stageData.m_PassStageCount);//200*1.02^关卡数
+            if (rank > 3) {
+                passStageGold /= 2;
+            }
+            character.SpeedUpGold += passStageGold;
+
+            items[i].transform.Find("GoldIcon/GoldTxt").GetComponent<Text>().text = character.SpeedUpGold.ToString();
+        }
+        
+        int times = 1;
+
+        switch (playerRank) {
+            case 1:
+                times = 5;
+                break;
+            case 2:
+                times = 3;
+                break;
+            case 3:
+                times = 2;
+                break;
+            default:
+                times = 1;
+                break;
         }
         
         var stageModel = stageData.m_CurStageModel;
@@ -105,5 +137,9 @@ public class RankPanel : BasePanel
             uiMng.GetPanel<BattlePanel>(PanelType.BattlePanel)?.SetBattleBGM();
         }
         
+        rewardGold = Player.Instance.SpeedUpGold * times;
+        GoldTxt.text = rewardGold.ToString();
+        GoldTxt2.text = rewardGold.ToString();
+        GoldDoubleTxt.text = (rewardGold * 2).ToString();
     }
 }

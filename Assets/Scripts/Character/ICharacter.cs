@@ -1,8 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ICharacter : MonoBehaviour
 {
+    public int SpeedUpGold;
+    
+    public Skidmarks skidmarks;
     public ParticleSystem LandingEff;
     public ParticleSystem DieEff;
     public ParticleSystem SpeedLine;
@@ -17,6 +21,7 @@ public class ICharacter : MonoBehaviour
     public bool isDie = false;
     public bool isStart = false;
     public bool isGameOver = false;
+    public bool isGround;
 
     public StateID currStateId = StateID.Ready;
 
@@ -84,6 +89,8 @@ public class ICharacter : MonoBehaviour
 
         if (other.tag == "SpeedUp")
         {
+            var PassStageCount = Player.Instance.stageData.m_PassStageCount;
+            SpeedUpGold += (int)(Random.Range(4,12) * MathTool.GetSpeedUpGold(PassStageCount));
         }
     }
 
@@ -111,6 +118,8 @@ public class ICharacter : MonoBehaviour
 
         if (collision.gameObject.tag == "Terrain")
         {
+            isGround = true;
+            
             rg.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             
             if (currStateId != StateID.Landing && (currStateId == StateID.Ready || currStateId == StateID.StartJump))
@@ -124,6 +133,8 @@ public class ICharacter : MonoBehaviour
     {
         if (collision.gameObject.tag == "Terrain")
         {
+            isGround = false;
+            
             rg.constraints = RigidbodyConstraints.FreezeRotation;
             
             
@@ -283,10 +294,16 @@ public class ICharacter : MonoBehaviour
 
         isDie = false;
         isStart = false;
+        isGround = false;
 
         m_PassTime = 0;
 
         mousePosOffset = Vector2.zero;
+        
+        skidmarks?.ClearSkid();
+        
+        SpeedUpGold = 0;
+        SetLocalEulerAngles(Vector3.zero);
     }
 
     public virtual void Die()
@@ -435,5 +452,9 @@ public class ICharacter : MonoBehaviour
             
         _skiRenderer.material.SetTexture("_MainTex",
             Resources.Load<Texture>("Textures/Skis/" + String.Format("ban-{0:D3}-uv", skinIndex)));
+    }
+
+    public void SetLocalEulerAngles(Vector3 vector3) {
+        transform.localEulerAngles = vector3;
     }
 }

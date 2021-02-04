@@ -10,13 +10,16 @@ public class XmlTool : ClassInstanceBase<XmlTool>
 
     public Dictionary<int, GuideModel> GuideDestCfg = new Dictionary<int, GuideModel>();
     public Dictionary<int, GuideModel> GuideSpeedUpCfg = new Dictionary<int, GuideModel>();
+    
+    public Dictionary<int, SkinModel> skisCfg = new Dictionary<int, SkinModel>();
+    
 
     public XmlTool() {
         LoadAllConfigs();//构造里面加载所有配置
     }
 
     private void LoadAllConfigs() {
-        // skinCfg = LoadingXML<SkinModel>("Skin");//皮肤设置
+        skinCfg = LoadingXML<SkinModel>("Skin");//皮肤设置
         stageCfg = LoadingXML<StageModel>("Stage");//关卡配置
         weatherCfg = LoadingXML<WeatherModel>("Weather");//天气配置
         // stuntCfg = LoadingXML<StuntModel>("Stunt");//特技动作配置
@@ -24,6 +27,8 @@ public class XmlTool : ClassInstanceBase<XmlTool>
         //
         // GuideDestCfg = LoadingXML<GuideModel>("GuideDestination");//终点引导配置
         // GuideSpeedUpCfg = LoadingXML<GuideModel>("GuideSpeedUp");//加速圈引导配置
+        
+        skisCfg = LoadingXML<SkinModel>("Skis");//滑雪板
     }
 
     // Loading所有XML或者指定好的XML

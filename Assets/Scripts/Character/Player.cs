@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -39,13 +40,13 @@ public class Player : ICharacter
         {
             uiMng.PushPanel(PanelType.RankPanel);
         }
-        
+
         if (other.tag == "SpeedUp")
         {
             if (fsm._character.SpeedLine) fsm._character.SpeedLine.Play();
             fsm._character.audioMng.PlayAudioEffect(MusicType.SpeedUp);
             fsm._character.audioMng.PlayAudioEffect(MusicType.Wind);
-                
+
             VibrateTool.Vibrate();
         }
     }
@@ -182,6 +183,11 @@ public class Player : ICharacter
 
     private void Init()
     {
+        var skinID = playerData.GetPlayerSkinID();
+        SetPlayerSkin(skinID);
+        
+        SetPlayerSkis(playerData.GetPlayerSkisID());
+        
         CreateAIPlayer();
         ReStart();
     }
@@ -192,17 +198,32 @@ public class Player : ICharacter
         AIPlayers = new ICharacter[7];
         AllPlayers = new ICharacter[8];
 
+        var skidmarks = Resources.Load<GameObject>("Prefabs/Skidmarks/Skidmarks");
+        
+        var skiingSkid1 = GetComponent<SkiingSkid>();
+        var sm1 = Instantiate(skidmarks).GetComponent<Skidmarks>();
+        skiingSkid1.iCharater = this;
+        skiingSkid1.skidmarksController = sm1;
+        this.skidmarks = sm1;
+
+        this.name = "我";
+        AllPlayers[7] = this;
+        this.m_nPos = 7;
+
         for (int i = 0; i < 7; i++)
         {
             AIPlayer ai = (AIPlayer) Instantiate(aiPlayer).GetComponent<ICharacter>();
             AIPlayers[i] = ai;
             AllPlayers[i] = ai;
             ai.m_nPos = i;
-        }
 
-        this.name = "我";
-        AllPlayers[7] = this;
-        this.m_nPos = 7;
+            //初始化AI滑雪痕迹控制脚本
+            var skiingSkid2 = ai.GetComponent<SkiingSkid>();
+            var sm2 = Instantiate(skidmarks).GetComponent<Skidmarks>();
+            skiingSkid2.iCharater = this;
+            skiingSkid2.skidmarksController = sm2;
+            ai.skidmarks = sm2;
+        }
     }
 
     public override void ReStart()
@@ -302,12 +323,13 @@ public class Player : ICharacter
     }
 
     List<int> _skinIndexList = new List<int>(14);
+
     void SetPlayerPos()
     {
         Vector3 startPos = startTran.position;
         transform.position = startPos;
         transform.rotation = Quaternion.Euler(Vector3.zero);
-        
+
         _skinIndexList.Clear();
         for (int j = 1; j < 15; j++)
         {
@@ -380,5 +402,57 @@ public class Player : ICharacter
         var isDieList = AllPlayers.Where(n => n.isDie == true).OrderByDescending(n => n.transform.position.z).ToArray();
 
         return aliveList.Concat(isDieList).ToArray();
+    }
+
+    private float startRoateY = 0;
+    private float startRoateX = 0;
+    public void SetStartRoate() {
+        startRoateY = transform.localEulerAngles.y;
+        startRoateX = transform.localEulerAngles.x;
+    }
+
+    public void SetPlayerRoate(float roateY, float roateX) {
+        float anglesX = 0;
+        if(currStateId == StateID.ShowSpeedUp) {
+            anglesX = startRoateX + roateX;
+        }
+        SetLocalEulerAngles(new Vector3(anglesX, startRoateY + roateY, 0));
+    }
+
+    /// <summary>
+    /// 设置玩家身体皮肤
+    /// </summary>
+    public void SetPlayerSkin(int skinID) {
+        if (XmlTool.Instance.skinCfg.ContainsKey(skinID)) {
+            var skinModel = XmlTool.Instance.skinCfg[skinID];
+            
+            _bodyRenderer.material.SetTexture("_MainTex",
+                Resources.Load<Texture>("Textures/Body/" + skinModel.TextureName));
+
+            playerData.SetPlayerSkinID(skinID);
+        }
+        else {
+            Debug.LogErrorFormat("皮肤ID:{0}不存在!", skinID);
+        }
+    }
+
+    /// <summary>
+    /// 设置滑雪板皮肤
+    /// </summary>
+    /// <param name="skisID"></param>
+    public void SetPlayerSkis(int skisID)
+    {
+        if (XmlTool.Instance.skisCfg.ContainsKey(skisID)) {
+            var skinModel = XmlTool.Instance.skisCfg[skisID];
+            
+            
+            _skiRenderer.material.SetTexture("_MainTex",
+                Resources.Load<Texture>("Textures/Skis/" + skinModel.TextureName));
+
+            playerData.SetPlayerSkisID(skisID);
+        }
+        else {
+            Debug.LogErrorFormat("滑雪板ID:{0}不存在!", skisID);
+        }
     }
 }

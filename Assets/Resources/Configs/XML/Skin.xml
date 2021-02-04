@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Nodes>
+	<Node ID="1" Name="皮肤1" TextureName="HX_001_body_col" IconName="1" RateMPH="2" RateG="3.5" RateX="1" UnlockStage="0" Price="0"/>
+	<Node ID="2" Name="皮肤2" TextureName="HX_002_body_col" IconName="2" RateMPH="4" RateG="3.6" RateX="1" UnlockStage="10" Price="10000"/>
+	<Node ID="3" Name="皮肤3" TextureName="HX_003_body_col" IconName="3" RateMPH="6" RateG="3.7" RateX="1" UnlockStage="25" Price="20000"/>
+	<Node ID="4" Name="皮肤4" TextureName="HX_004_body_col" IconName="4" RateMPH="8" RateG="3.8" RateX="1" UnlockStage="40" Price="30000"/>
+	<Node ID="5" Name="皮肤5" TextureName="HX_005_body_col" IconName="5" RateMPH="10" RateG="3.9" RateX="1" UnlockStage="60" Price="45000"/>
+	<Node ID="6" Name="皮肤6" TextureName="HX_006_body_col" IconName="6" RateMPH="12" RateG="3.10" RateX="1" UnlockStage="80" Price="60000"/>
+	<Node ID="7" Name="皮肤7" TextureName="HX_007_body_col" IconName="7" RateMPH="14" RateG="3.11" RateX="1" UnlockStage="100" Price="75000"/>
+	<Node ID="8" Name="皮肤8" TextureName="HX_008_body_col" IconName="8" RateMPH="16" RateG="3.12" RateX="1" UnlockStage="120" Price="90000"/>
+	<Node ID="9" Name="皮肤9" TextureName="HX_009_body_col" IconName="9" RateMPH="17" RateG="3.13" RateX="1" UnlockStage="120" Price="90001"/>
+	<Node ID="10" Name="皮肤10" TextureName="HX_010_body_col" IconName="10" RateMPH="18" RateG="3.14" RateX="1" UnlockStage="120" Price="90002"/>
+	<Node ID="11" Name="皮肤11" TextureName="HX_011_body_col" IconName="11" RateMPH="19" RateG="3.15" RateX="1" UnlockStage="120" Price="90003"/>
+	<Node ID="12" Name="皮肤12" TextureName="HX_012_body_col" IconName="12" RateMPH="20" RateG="3.16" RateX="1" UnlockStage="120" Price="90004"/>
+	<Node ID="13" Name="皮肤13" TextureName="HX_013_body_col" IconName="13" RateMPH="21" RateG="3.17" RateX="1" UnlockStage="120" Price="90005"/>
+	<Node ID="14" Name="皮肤14" TextureName="HX_014_body_col" IconName="14" RateMPH="22" RateG="3.18" RateX="1" UnlockStage="120" Price="90006"/>
+</Nodes>

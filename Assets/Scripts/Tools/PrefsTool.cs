@@ -165,6 +165,43 @@ public class PrefsTool
         string key = "UserID" + userID.ToString() + "OwnedSkinIDs";
         PlayerPrefs.SetString(key, ids);
     }
+    
+    /// <summary>
+    /// 获取玩家当前滑雪板ID
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <returns></returns>
+    public static int GetPlayerSkisID(string userID = "1001") {
+        string key = "UserID" + userID.ToString() + "PlayerSkisID";
+        if (!PlayerPrefs.HasKey(key)) {
+            return 1;
+        }
+        return PlayerPrefs.GetInt(key);
+    }
+    public static void SetPlayerSkisID(int id, string userID = "1001") {
+        string key = "UserID" + userID.ToString() + "PlayerSkisID";
+        PlayerPrefs.SetInt(key, id);
+    }
+
+
+    /// <summary>
+    /// 获取已经拥有的滑雪板Id,以逗号隔开
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <returns></returns>
+    public static string GetOwnedSkisIDs(string userID = "1001")
+    {
+        string key = "UserID" + userID.ToString() + "OwnedSkisIDs";
+        if (!PlayerPrefs.HasKey(key)) {
+            return "1";
+        }
+        return PlayerPrefs.GetString(key);
+    }
+    public static void SetOwnedSkisIDs(string ids, string userID = "1001")
+    {
+        string key = "UserID" + userID.ToString() + "OwnedSkisIDs";
+        PlayerPrefs.SetString(key, ids);
+    } 
 
     /// <summary>
     /// 获取已拥有的特效

@@ -224,4 +224,18 @@ public class Skidmarks : MonoBehaviour {
 
 		meshUpdated = true;
 	}
+
+	public void ClearSkid()
+	{
+		if (vertices == null)
+		{
+			return;
+		}
+		
+		for (int i = 0; i < vertices.Length; i++)
+		{
+			vertices[i] = Vector3.zero;
+		}
+		meshUpdated = true;
+	}
 }
