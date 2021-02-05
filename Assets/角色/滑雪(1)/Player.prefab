@@ -2943,6 +2943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08a53e7704c4362b0e62a4702e0181b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedUpGold: 0
   skidmarks: {fileID: 0}
   LandingEff: {fileID: 198875819740892428}
   DieEff: {fileID: 198239219162108040}
@@ -2962,7 +2963,8 @@ MonoBehaviour:
   speedUpForce: 50
   horizontalForce: 10
   jumpForce: 300
-  horizontalVelocityMax: 7
+  horizontalVelocityMax: 8
+  horizontalForceSensitivity: 10
   stopForceStrength: 15
   leftAndRightBtnIsDown: 0
   curHorizontalDirection: 0
@@ -2975,7 +2977,6 @@ MonoBehaviour:
   horizontalDynamicFriction: 0.1
   curDynamicFriction: 0
   curVelocity: {x: 0, y: 0, z: 0}
-  horizontalForceSensitivity: 5
   mousePosOffset: {x: 0, y: 0}
   AIPlayers: []
   AllPlayers: []

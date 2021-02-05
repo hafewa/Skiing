@@ -36,6 +36,7 @@ public class ICharacter : MonoBehaviour
     public int horizontalForce = 10; //左右力的大小
     public int jumpForce = 60; //起跳力的大小
     public float horizontalVelocityMax = 5f; //横向最大速度
+    [Range(1, 100)] public float horizontalForceSensitivity = 1; //左有滑动灵敏度
     public float stopForceStrength = 50;
 
     public bool leftAndRightBtnIsDown = false; //左右滑动是否按下
@@ -52,7 +53,6 @@ public class ICharacter : MonoBehaviour
     public float curDynamicFriction;
     public Vector3 curVelocity;
 
-    [Range(1, 10)] public float horizontalForceSensitivity = 1; //左有滑动灵敏度
     public Vector2 mousePosOffset = Vector2.zero; //鼠标拖拽位移
 
     public AudioManager audioMng

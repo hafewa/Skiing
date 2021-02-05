@@ -61,44 +61,9 @@ public class Player : ICharacter
         if (isStart)
         {
 #if UNITY_EDITOR || UNITY_STANDALONE //电脑操作
-
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            {
-                transform.Rotate(transform.right * Time.deltaTime * 45);
-            }
-
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            {
-                transform.Rotate(-transform.right * Time.deltaTime * 45);
-            }
-
-            // float h = Input.GetAxis("Horizontal"); //得到键盘左右控制
-
-            // Debug.Log("Horizontal: " + h);
-
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 SetJumpForce(jumpForce);
-            }
-
-            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.D) ||
-                Input.GetKeyUp(KeyCode.RightArrow))
-            {
-                leftAndRightBtnIsDown = false;
-                curHorizontalDirection = 0;
-                SetHorizontalForce(curHorizontalDirection);
-            }
-
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            {
-                leftAndRightBtnIsDown = true;
-                curHorizontalDirection = -1;
-            }
-
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            {
-                leftAndRightBtnIsDown = true;
-                curHorizontalDirection = 1;
             }
 #endif
 
@@ -157,13 +122,9 @@ public class Player : ICharacter
             else
             {
                 curHorizontalDirection = 0;
-                SetHorizontalForce(curHorizontalDirection);
             }
-
-            if (leftAndRightBtnIsDown) //左右键按下时,持续施加力
-            {
-                SetHorizontalForce(curHorizontalDirection);
-            }
+            
+            SetHorizontalForce(curHorizontalDirection);
 
             base.FixedUpdate();
         }
