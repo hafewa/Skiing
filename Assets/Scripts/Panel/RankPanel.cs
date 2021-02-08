@@ -11,7 +11,7 @@ public class RankPanel : BasePanel
     
     int rewardGold;
     
-    public Transform[] items;
+    public RankItem[] items;
 
     // public Sprite rankBg1;
     // public Sprite rankBg2;
@@ -85,10 +85,10 @@ public class RankPanel : BasePanel
                 nameStr = "我";
                 // temp = rankBgSelf;
                 playerRank = rank;
-                items[i].transform.Find("Flag").SetActive(true);
+                items[i].Flag.SetActive(true);
             }
             else {
-                items[i].transform.Find("Flag").SetActive(false);
+                items[i].Flag.SetActive(false);
                 // if (rank % 2 == 1) {
                 //     temp = rankBg1;
                 // }
@@ -98,7 +98,7 @@ public class RankPanel : BasePanel
             }
 
             // items[i].transform.GetComponent<Image>().sprite = temp;
-            items[i].transform.Find("NameTxt").GetComponent<Text>().text = nameStr;
+            items[i].NameTxt.text = nameStr;
             
             int passStageGold = MathTool.GetPassStageGold(stageData.m_PassStageCount);//200*1.02^关卡数
             if (rank > 3) {
@@ -106,7 +106,7 @@ public class RankPanel : BasePanel
             }
             character.SpeedUpGold += passStageGold;
 
-            items[i].transform.Find("GoldIcon/GoldTxt").GetComponent<Text>().text = character.SpeedUpGold.ToString();
+            items[i].GoldTxt.text = character.SpeedUpGold.ToString();
         }
         
         int times = 1;
