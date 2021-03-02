@@ -142,10 +142,10 @@ public class Skidmarks : MonoBehaviour {
 			// - Skidmark markIndex loops around, and other car overwrites index 50
 			// - Car draws skidmark, e.g. index 45. Last index was 40, but now 40 is different, changed by someone else.
 			// This makes sure we ignore the last index if the distance looks wrong
-			if (distAndDirection.sqrMagnitude > MIN_SQR_DISTANCE * 10) {
-				lastIndex = -1;
-				lastSection = null;
-			}
+			// if (distAndDirection.sqrMagnitude > MIN_SQR_DISTANCE * 10) {
+			// 	lastIndex = -1;
+			// 	lastSection = null;
+			// }
 		}
 
 		colour.a = (byte)(colour.a * MAX_OPACITY);

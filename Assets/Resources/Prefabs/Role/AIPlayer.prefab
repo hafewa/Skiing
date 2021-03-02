@@ -2916,6 +2916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9552fa25833a43d7a52bafdd1728e7ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedUpGold: 0
   skidmarks: {fileID: 0}
   LandingEff: {fileID: 198165890459411306}
   DieEff: {fileID: 198135537992294680}
@@ -2933,9 +2934,9 @@ MonoBehaviour:
   col: {fileID: 65538401198051658}
   anim: {fileID: 111391290863392548}
   speedUpForce: 50
-  horizontalForce: 10
   jumpForce: 300
   horizontalVelocityMax: 7
+  horizontalForceSensitivity: 100
   stopForceStrength: 15
   leftAndRightBtnIsDown: 0
   curHorizontalDirection: 0
@@ -2948,7 +2949,8 @@ MonoBehaviour:
   horizontalDynamicFriction: 0.1
   curDynamicFriction: 0
   curVelocity: {x: 0, y: 0, z: 0}
-  horizontalForceSensitivity: 5
+  curSpeed: 0
+  maxSpeed: 75
   mousePosOffset: {x: 0, y: 0}
 --- !u!114 &114275638268470976
 MonoBehaviour:

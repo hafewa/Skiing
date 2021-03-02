@@ -144,4 +144,74 @@ public class MapManager : IManager
         RenderSettings.ambientMode = (UnityEngine.Rendering.AmbientMode.Flat);
         RenderSettings.ambientSkyColor = Color.white;
     }
+
+    
+    Queue<Transform> endlessMapQue = new Queue<Transform>();//无限地图队列
+    /// <summary>
+    /// 拼接地图
+    /// </summary>
+    public void LoadMap2()
+    {
+        uiMng.PushPanel(PanelType.LoadingPanel);
+
+        curMap = null;
+        for (int i = 0; i < mapRoot.childCount; i++) {
+            var child = mapRoot.GetChild(i);
+            
+            if (child != null) {
+                Object.Destroy(child.gameObject);
+            }
+        }
+
+        endlessMapQue.Clear();
+        
+        string mapChunkNameStart = "Snow Mountain_Start";
+        string mapChunkNameMiddle = "Snow Mountain_Middle";
+        string mapChunkNameEnd = "Snow Mountain_End";
+        
+        var mapChunkStart = Resources.Load<GameObject>("Prefabs/Map/" + mapChunkNameStart);  
+        var mapChunkMiddle = Resources.Load<GameObject>("Prefabs/Map/" + mapChunkNameMiddle);  
+        // var mapChunkEnd = Resources.Load<GameObject>("Prefabs/Map/" + mapChunkNameEnd);  
+        
+        var start =  Object.Instantiate(mapChunkStart, mapRoot);
+        // var end =  Object.Instantiate(mapChunkEnd, mapRoot);
+
+        mapChunkPos = Vector3.zero;
+        start.transform.position = mapChunkPos;
+        nextChunkPos(ref mapChunkPos);
+        
+        for (int i = 0; i < 5; i++)
+        {
+            var middle =  Object.Instantiate(mapChunkMiddle, mapRoot);
+            middle.transform.position = mapChunkPos;
+            nextChunkPos(ref mapChunkPos);
+            endlessMapQue.Enqueue(middle.transform);
+        }
+        
+        // end.transform.position = mapChunkPos;
+
+        Player.Instance.SetMapData2(start.transform, null);
+        
+        SetEnvironment();
+    }
+
+    public Vector3 lastPos;
+    public Vector3 mapChunkPos;
+    public void nextChunkPos(ref Vector3 pos)
+    {
+        lastPos = pos;
+        pos.z += 200;
+        pos.y -= 75;
+    }
+
+    public void MoveMapChunk()
+    {
+        if (Mathf.Abs(Player.Instance.transform.position.y - lastPos.y) < 150)
+        {
+            var middle = endlessMapQue.Dequeue();
+            middle.position = mapChunkPos;
+            nextChunkPos(ref mapChunkPos);
+            endlessMapQue.Enqueue(middle);
+        }
+    }
 }

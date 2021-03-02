@@ -20,6 +20,8 @@ public class CameraTrack : MonoBehaviour
     private Vector3[] vPassPt;
     private ArrayList oldPostions = new ArrayList();
     //private int m_nRunState = 0;    //0准备开始  1飞行中  2死亡
+    float curDistance;
+    private float curHeight;
     private void FixedUpdate() {
         // Early out if we don't have a target
         //if(Player.Instance.isStart)
@@ -56,22 +58,23 @@ public class CameraTrack : MonoBehaviour
             oldPostions.Add(target.position);
 
             //冲锋额外拉远
-            distance += 0;//1.3f * Player.Instance.curSpeedUpTime / Player.Instance.speedUpTime;
+            curDistance += 0;//1.3f * Player.Instance.curSpeedUpTime / Player.Instance.speedUpTime;
 
             while (oldPostions.Count >= 6)
                 oldPostions.RemoveAt(0);
+            
             if (Player.Instance.isStart)
             {
-                distance += (5 - distance) * 0.1f;
-                height += (2.5f - height) * 0.1f;
+                curDistance += (distance - curDistance) * 0.1f;
+                curHeight += (height - curHeight) * 0.1f;
             }
             else
             {
-                distance = 20;
-                height = 10;
+                curDistance = 20;
+                curHeight = 10;
             }
 
-            Vector3 pos = (Vector3)oldPostions[0] - Vector3.forward * distance + new Vector3(0, height,0);
+            Vector3 pos = (Vector3)oldPostions[0] - Vector3.forward * curDistance + new Vector3(0, curHeight,0);
             //pos.y = currentHeight;
 
             // Set the height of the camera
@@ -90,7 +93,7 @@ public class CameraTrack : MonoBehaviour
             {
                 var tmpT = Player.Instance.transform.position;
 
-                tmpT = new Vector3(transform.position.x, transform.position.y - height, tmpT.z);
+                tmpT = new Vector3(transform.position.x, transform.position.y - curHeight, tmpT.z);
                 transform.LookAt(tmpT);
             }
         }

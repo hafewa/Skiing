@@ -33,10 +33,9 @@ public class ICharacter : MonoBehaviour
 
 
     public float speedUpForce = 50f;
-    public int horizontalForce = 10; //左右力的大小
     public int jumpForce = 60; //起跳力的大小
     public float horizontalVelocityMax = 5f; //横向最大速度
-    [Range(1, 100)] public float horizontalForceSensitivity = 1; //左有滑动灵敏度
+    [Range(1, 150)] public float horizontalForceSensitivity = 1; //左有滑动灵敏度
     public float stopForceStrength = 50;
 
     public bool leftAndRightBtnIsDown = false; //左右滑动是否按下
@@ -52,6 +51,8 @@ public class ICharacter : MonoBehaviour
     public float horizontalDynamicFriction = 0.1f; //左右动摩擦系数
     public float curDynamicFriction;
     public Vector3 curVelocity;
+    public float curSpeed;
+    public float maxSpeed = 50;
 
     public Vector2 mousePosOffset = Vector2.zero; //鼠标拖拽位移
 
@@ -129,6 +130,14 @@ public class ICharacter : MonoBehaviour
         }
     }
 
+    public virtual void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Terrain")
+        {
+            isGround = true;
+        }
+    }
+
     public virtual void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Terrain")
@@ -153,17 +162,38 @@ public class ICharacter : MonoBehaviour
         if (isStart && !isDie)
         {
             m_PassTime += Time.deltaTime;
-
-            if (col != null)
-            {
-                curDynamicFriction = col.material.dynamicFriction;
-            }
-
+            
             if (rg != null)
             {
                 curVelocity = rg.velocity;
+                curSpeed = curVelocity.magnitude;
             }
 
+            if (col != null)
+            {
+                if (curSpeed > maxSpeed)
+                {
+                    SetDynamicFriction(curDynamicFriction + Time.deltaTime);
+                }
+                else
+                {
+                    switch (currStateId)
+                    {
+                        case StateID.Forward:
+                            SetDynamicFriction(forwardDynamicFriction);
+                            break;
+                        case StateID.Left:
+                            SetDynamicFriction(horizontalDynamicFriction);
+                            break;
+                        case StateID.Right:
+                            SetDynamicFriction(horizontalDynamicFriction);
+                            break;
+                    }
+                }
+                
+                curDynamicFriction = col.material.dynamicFriction;
+            }
+            
             //左右速度超过最大值时,停止施加力
             if ((rg.velocity.x < -horizontalVelocityMax && curHorizontalForce < 0) ||
                 (rg.velocity.x > horizontalVelocityMax && curHorizontalForce > 0))

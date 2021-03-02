@@ -49,6 +49,20 @@ public class Player : ICharacter
 
             VibrateTool.Vibrate();
         }
+
+        //吃金币
+        if (other.tag == "Gold")
+        {
+            other.SetActive(false);
+
+            playerData.AddPlayerGold(Random.Range(5, 11));
+            
+            if (battlePanel == null)
+            {
+                battlePanel = GameFacade.Instance.uiMng.GetPanel<BattlePanel>(PanelType.BattlePanel);
+            }
+            battlePanel.RefreshGold();
+        }
     }
 
     public Vector3 startPos; //开始点击位置
@@ -60,6 +74,7 @@ public class Player : ICharacter
     {
         if (isStart)
         {
+            var touchWidth = Screen.width / 2;
 #if UNITY_EDITOR || UNITY_STANDALONE //电脑操作
             if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -89,6 +104,7 @@ public class Player : ICharacter
                 {
                     nextFramePos = Input.GetTouch(0).position;
                     mousePosOffset += (Vector2) (nextFramePos - startPos);
+                    mousePosOffset.x = Mathf.Clamp(mousePosOffset.x, -touchWidth, touchWidth);
                     startPos = nextFramePos;
                 }
             }
@@ -110,6 +126,7 @@ public class Player : ICharacter
             {
                 nextFramePos = Input.mousePosition;
                 mousePosOffset += (Vector2) (nextFramePos - startPos);
+                mousePosOffset.x = Mathf.Clamp(mousePosOffset.x, -touchWidth, touchWidth);
                 startPos = nextFramePos;
             }
 #endif
@@ -117,7 +134,7 @@ public class Player : ICharacter
             leftAndRightBtnIsDown = startPosFlag;
             if (leftAndRightBtnIsDown)
             {
-                curHorizontalDirection = mousePosOffset.x * horizontalForceSensitivity / Screen.width;
+                curHorizontalDirection = mousePosOffset.x / touchWidth;
             }
             else
             {
@@ -125,6 +142,8 @@ public class Player : ICharacter
             }
             
             SetHorizontalForce(curHorizontalDirection);
+
+            mapMng.MoveMapChunk();
 
             base.FixedUpdate();
         }
@@ -181,7 +200,7 @@ public class Player : ICharacter
             //初始化AI滑雪痕迹控制脚本
             var skiingSkid2 = ai.GetComponent<SkiingSkid>();
             var sm2 = Instantiate(skidmarks).GetComponent<Skidmarks>();
-            skiingSkid2.iCharater = this;
+            skiingSkid2.iCharater = ai;
             skiingSkid2.skidmarksController = sm2;
             ai.skidmarks = sm2;
         }
@@ -198,7 +217,8 @@ public class Player : ICharacter
 
     public void RefreshMap()
     {
-        mapMng.LoadMap();
+        // mapMng.LoadMap();
+        mapMng.LoadMap2();
     }
 
     public void SetMapData(Transform map)
@@ -283,6 +303,47 @@ public class Player : ICharacter
         uiMng.GetPanel<LoadingPanel>(PanelType.LoadingPanel)?.MapLoaded();
     }
 
+    public void SetMapData2(Transform start, Transform end)
+    {
+        var stageModel = stageData.m_CurStageModel;
+        if (stageModel != null)
+        {
+            var childIndex = int.Parse(stageModel.StartPosName);
+            var startPos = start.Find("StartPos");
+            if (startPos != null)
+            {
+                for (int i = 0; i < startPos.childCount; i++)
+                {
+                    startPos.GetChild(i).SetActive(false);
+                }
+
+                startTran = startPos.GetChild(childIndex);
+                startTran.SetActive(true);
+            }
+            else
+            {
+                Debug.LogErrorFormat("起点:{0} 不存在", stageModel.StartPosName);
+            }
+
+            var root = (end == null ? null : end.Find("EndPos"));
+            if (root != null)
+            {
+                root.SetActive(true);
+                for (int i = 0; i < root.childCount; i++)
+                {
+                    root.GetChild(i).SetActive(false);
+                }
+
+                endTran = root.GetChild(childIndex);
+                endTran.SetActive(true);
+            }
+
+            SetPlayerPos();
+        }
+
+        uiMng.GetPanel<LoadingPanel>(PanelType.LoadingPanel)?.MapLoaded();
+    }
+
     List<int> _skinIndexList = new List<int>(14);
 
     void SetPlayerPos()
@@ -333,7 +394,7 @@ public class Player : ICharacter
 
     public void SetHorizontalForce(float h)
     {
-        curHorizontalForce = h * horizontalForce;
+        curHorizontalForce = h * horizontalForceSensitivity;
     }
 
     public void SetJumpForce(float jumpForce)

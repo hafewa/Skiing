@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BattlePanel : BasePanel
 {    
+    public Text GoldTxt;
     public RadialBlurEffect blurEffect;
         
     public Image PassCondition;
@@ -38,7 +39,9 @@ public class BattlePanel : BasePanel
 
         #region  终点距离进度
 
-        curDistance = MathTool.GetZDis(Player.Instance.endTran.position, Player.Instance.transform.position);
+        curDistance = Player.Instance.endTran == null
+            ? float.MaxValue
+            : MathTool.GetZDis(Player.Instance.endTran.position, Player.Instance.transform.position);
         Progress.fillAmount = 1 - curDistance / initDis;
         var width = Progress.GetComponent<RectTransform>().sizeDelta.x;
         var pos = Pointer.transform.localPosition;
@@ -163,17 +166,24 @@ public class BattlePanel : BasePanel
         Player.Instance.SetJumpForce(Player.Instance.jumpForce);
     }
 
+    public void RefreshGold() {
+        GoldTxt.text = PrefsTool.GetPlayerGold().ToString();
+    }
+
     public void RefreshUI()
     {
         TimeTxt.SetActive(Player.Instance.isTimeLimit);
         
         StageTxt.text = (stageData.m_PassStageCount + 1).ToString();
-        
-        initDis = MathTool.GetZDis(Player.Instance.endTran.position, Player.Instance.transform.position);
+
+        initDis = Player.Instance.endTran == null
+            ? float.MaxValue
+            : MathTool.GetZDis(Player.Instance.endTran.position, Player.Instance.transform.position);
 
         initRank();
         InitEncourage();
         ConditionShow();
+        RefreshGold();
     }
     
     public void initRank() {

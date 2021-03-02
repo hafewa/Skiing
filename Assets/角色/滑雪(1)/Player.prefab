@@ -2961,10 +2961,9 @@ MonoBehaviour:
   col: {fileID: 65376360121756966}
   anim: {fileID: 111981337933787982}
   speedUpForce: 50
-  horizontalForce: 10
   jumpForce: 300
   horizontalVelocityMax: 8
-  horizontalForceSensitivity: 10
+  horizontalForceSensitivity: 100
   stopForceStrength: 15
   leftAndRightBtnIsDown: 0
   curHorizontalDirection: 0
@@ -2977,6 +2976,8 @@ MonoBehaviour:
   horizontalDynamicFriction: 0.1
   curDynamicFriction: 0
   curVelocity: {x: 0, y: 0, z: 0}
+  curSpeed: 0
+  maxSpeed: 75
   mousePosOffset: {x: 0, y: 0}
   AIPlayers: []
   AllPlayers: []
