@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Player : ICharacter
 {
+    
     BattlePanel battlePanel;
 
     public ICharacter[] AIPlayers;

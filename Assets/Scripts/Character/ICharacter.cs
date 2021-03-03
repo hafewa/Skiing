@@ -4,6 +4,8 @@ using Random = UnityEngine.Random;
 
 public class ICharacter : MonoBehaviour
 {
+    public int m_nRunFrm = 0;
+    
     public int SpeedUpGold;
     
     public Skidmarks skidmarks;
@@ -161,6 +163,7 @@ public class ICharacter : MonoBehaviour
 
         if (isStart && !isDie)
         {
+            m_nRunFrm++;
             m_PassTime += Time.deltaTime;
             
             if (rg != null)
@@ -317,6 +320,8 @@ public class ICharacter : MonoBehaviour
 
     public virtual void Ready()
     {
+        m_nRunFrm = 0;
+        
         rg.velocity = Vector3.zero;
         rg.useGravity = false;
         rg.isKinematic = true;
