@@ -115,16 +115,32 @@ public class CameraTrack : MonoBehaviour
             }
 
             var oldVelocity = oldVelocityQueue.Peek();
-            if (oldVelocity.magnitude < 5f)
+
+            if (Player.Instance.curCamRotateAngle < 360)
             {
-                transform.position = pos;
+                #region 玩家起跳离地后的镜头环绕效果
+
+                Player.Instance.curCamRotateAngle += Player.Instance.camRotateSpeed;
+                var dir = Quaternion.AngleAxis(Player.Instance.curCamRotateAngle, Vector3.up) * Vector3.back;
+
+                var newPos = target.position + dir * curDistance + Vector3.up * curHeight / 2;
+                transform.position = newPos;
+
+                #endregion
             }
             else
             {
-                var newPos =  target.position - oldVelocity.normalized * curDistance +
-                                      Vector3.up * curHeight / 2;
+                if (oldVelocity.magnitude < 5f)
+                {
+                    transform.position = pos;
+                }
+                else
+                {
+                    var newPos =  target.position - oldVelocity.normalized * curDistance +
+                                  Vector3.up * curHeight / 2;
 
-                transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * 6);
+                    transform.position = Vector3.Lerp(transform.position, newPos, dt * 6);
+                }
             }
 
             transform.LookAt(target);

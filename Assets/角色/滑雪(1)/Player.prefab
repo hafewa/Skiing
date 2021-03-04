@@ -2943,6 +2943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08a53e7704c4362b0e62a4702e0181b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_nRunFrm: 0
   SpeedUpGold: 0
   skidmarks: {fileID: 0}
   LandingEff: {fileID: 198875819740892428}
@@ -2979,6 +2980,8 @@ MonoBehaviour:
   curSpeed: 0
   maxSpeed: 75
   mousePosOffset: {x: 0, y: 0}
+  camRotateSpeed: 5
+  curCamRotateAngle: 360
   AIPlayers: []
   AllPlayers: []
   isEnterBattle: 0

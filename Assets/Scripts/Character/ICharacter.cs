@@ -351,6 +351,8 @@ public class ICharacter : MonoBehaviour
     public virtual void Landing()
     {
         LandingEff.Play();
+        
+        curCamRotateAngle = 360;
     }
 
     public virtual void Up()
@@ -381,9 +383,11 @@ public class ICharacter : MonoBehaviour
         
     }
 
+    public float camRotateSpeed = 10;
+    public float curCamRotateAngle = 360;
     public virtual void StartJump()
     {
-        
+        curCamRotateAngle = 0;
     }
 
     /// <summary>
