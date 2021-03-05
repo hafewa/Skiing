@@ -105,7 +105,7 @@ public class CameraTrack : MonoBehaviour
             //     transform.LookAt(tmpT);
             // }
 
-            #region 滑雪跟拍效果
+            #region 滑雪视角跟拍效果
 
             var curVelocity = Player.Instance.curVelocity;
             oldVelocityQueue.Enqueue(curVelocity);
@@ -116,14 +116,23 @@ public class CameraTrack : MonoBehaviour
 
             var oldVelocity = oldVelocityQueue.Peek();
 
-            if (Player.Instance.curCamRotateAngle < 360)
+            if (Player.Instance.currStateId == StateID.StartJump)
             {
                 #region 玩家起跳离地后的镜头环绕效果
 
-                Player.Instance.curCamRotateAngle += Player.Instance.camRotateSpeed;
-                var dir = Quaternion.AngleAxis(Player.Instance.curCamRotateAngle, Vector3.up) * Vector3.back;
+                Player.Instance.curCamRotateAngle += Player.Instance.camRotateSpeed * Player.Instance.curDir;
+                if (Mathf.Abs(Player.Instance.curCamRotateAngle) > Player.Instance.maxCamRotateAngle)
+                {
+                    Player.Instance.curDir = -Player.Instance.curDir;
+                }
 
-                var newPos = target.position + dir * curDistance + Vector3.up * curHeight / 2;
+                if (Player.Instance.curCamRotateAngle == 0)
+                {
+                    Player.Instance.curDir = 0;
+                }
+
+                var dir = Quaternion.AngleAxis(Player.Instance.curCamRotateAngle, Player.Instance.curAxis) * Vector3.back;
+                var newPos = target.position + dir * curDistance + Vector3.up * curHeight;
                 transform.position = newPos;
 
                 #endregion
@@ -136,8 +145,8 @@ public class CameraTrack : MonoBehaviour
                 }
                 else
                 {
-                    var newPos =  target.position - oldVelocity.normalized * curDistance +
-                                  Vector3.up * curHeight / 2;
+                    var newPos = target.position - oldVelocity.normalized * curDistance +
+                                 Vector3.up * curHeight / 2;
 
                     transform.position = Vector3.Lerp(transform.position, newPos, dt * 6);
                 }

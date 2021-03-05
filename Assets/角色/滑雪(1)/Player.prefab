@@ -2980,8 +2980,10 @@ MonoBehaviour:
   curSpeed: 0
   maxSpeed: 75
   mousePosOffset: {x: 0, y: 0}
-  camRotateSpeed: 5
+  curDir: 1
+  camRotateSpeed: 1
   curCamRotateAngle: 360
+  maxCamRotateAngle: 30
   AIPlayers: []
   AllPlayers: []
   isEnterBattle: 0

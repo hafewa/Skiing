@@ -351,8 +351,6 @@ public class ICharacter : MonoBehaviour
     public virtual void Landing()
     {
         LandingEff.Play();
-        
-        curCamRotateAngle = 360;
     }
 
     public virtual void Up()
@@ -383,11 +381,16 @@ public class ICharacter : MonoBehaviour
         
     }
 
-    public float camRotateSpeed = 10;
-    public float curCamRotateAngle = 360;
+    public Vector3 curAxis;
+    public float curDir = 1;//相机环绕顺逆时针切换
+    public float camRotateSpeed = 10;//相机环绕角速度
+    public float curCamRotateAngle = 0;//相机当前环绕角度
+    public float maxCamRotateAngle = 60;//最大环绕角度
     public virtual void StartJump()
     {
         curCamRotateAngle = 0;
+        curDir = (Random.Range(0, 2) == 0 ? 1 : -1);
+        curAxis = (Random.Range(0, 2) == 0 ? Vector3.left : Vector3.up);
     }
 
     /// <summary>
