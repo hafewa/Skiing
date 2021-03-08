@@ -180,13 +180,49 @@ public class MapManager : IManager
         start.transform.position = mapChunkPos;
         nextChunkPos(ref mapChunkPos);
         
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 1; i++)
         {
             var middle =  Object.Instantiate(mapChunkMiddle, mapRoot);
             middle.transform.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
             endlessMapQue.Enqueue(middle.transform);
         }
+
+        var mapChunkMiddle2_1 = Resources.Load<GameObject>("Prefabs/Map/Snow Mountain2_Middle1");
+        for (int i = 0; i < 1; i++)
+        {
+            var middle =  Object.Instantiate(mapChunkMiddle2_1, mapRoot);
+            middle.transform.position = mapChunkPos;
+            nextChunkPos(ref mapChunkPos);
+            endlessMapQue.Enqueue(middle.transform);
+        }
+        
+        for (int i = 0; i < 1; i++)
+        {
+            var middle =  Object.Instantiate(mapChunkMiddle, mapRoot);
+            middle.transform.position = mapChunkPos;
+            nextChunkPos(ref mapChunkPos);
+            endlessMapQue.Enqueue(middle.transform);
+        }
+
+        var mapChunkMiddle2_2 = Resources.Load<GameObject>("Prefabs/Map/Snow Mountain2_Middle2");
+        for (int i = 0; i < 1; i++)
+        {
+            var middle =  Object.Instantiate(mapChunkMiddle2_2, mapRoot);
+            middle.transform.position = mapChunkPos;
+            nextChunkPos(ref mapChunkPos);
+            endlessMapQue.Enqueue(middle.transform);
+        }
+
+        var mapChunkMiddle2_3 = Resources.Load<GameObject>("Prefabs/Map/Snow Mountain2_Middle3");
+        for (int i = 0; i < 1; i++)
+        {
+            var middle =  Object.Instantiate(mapChunkMiddle2_3, mapRoot);
+            middle.transform.position = mapChunkPos;
+            nextChunkPos(ref mapChunkPos);
+            endlessMapQue.Enqueue(middle.transform);
+        }
+        
         
         // end.transform.position = mapChunkPos;
 
