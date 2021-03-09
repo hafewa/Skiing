@@ -24,6 +24,9 @@ public class ICharacter : MonoBehaviour
     public bool isStart = false;
     public bool isGameOver = false;
     public bool isGround;
+    public bool firstLand;//第一次落地标记
+
+    public float firstSpeedUpForce = 300;
 
     public StateID currStateId = StateID.Ready;
 
@@ -54,6 +57,7 @@ public class ICharacter : MonoBehaviour
     public float curDynamicFriction;
     public Vector3 curVelocity;
     public float curSpeed;
+    public float camRotateFixedSpeed;//视角固定的最大速度
     public float maxSpeed = 50;
 
     public Vector2 mousePosOffset = Vector2.zero; //鼠标拖拽位移
@@ -122,6 +126,12 @@ public class ICharacter : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             isGround = true;
+
+            if (firstLand)
+            {
+                firstLand = false;
+                rg.AddForce(transform.forward * firstSpeedUpForce);
+            }
             
             rg.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             
@@ -330,6 +340,7 @@ public class ICharacter : MonoBehaviour
         isDie = false;
         isStart = false;
         isGround = false;
+        firstLand = true;
 
         m_PassTime = 0;
 

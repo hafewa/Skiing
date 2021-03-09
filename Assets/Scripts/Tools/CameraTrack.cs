@@ -139,7 +139,7 @@ public class CameraTrack : MonoBehaviour
             }
             else
             {
-                if (oldVelocity.magnitude < 5f)
+                if (oldVelocity.magnitude < Player.Instance.camRotateFixedSpeed)
                 {
                     transform.position = pos;
                 }

@@ -2957,12 +2957,14 @@ MonoBehaviour:
   isStart: 0
   isGameOver: 0
   isGround: 0
+  firstLand: 0
+  firstSpeedUpForce: 500
   currStateId: 1
   rg: {fileID: 54640572440966602}
   col: {fileID: 65376360121756966}
   anim: {fileID: 111981337933787982}
   speedUpForce: 50
-  jumpForce: 300
+  jumpForce: 500
   horizontalVelocityMax: 8
   horizontalForceSensitivity: 100
   stopForceStrength: 15
@@ -2978,8 +2980,10 @@ MonoBehaviour:
   curDynamicFriction: 0
   curVelocity: {x: 0, y: 0, z: 0}
   curSpeed: 0
+  camRotateFixedSpeed: 15
   maxSpeed: 75
   mousePosOffset: {x: 0, y: 0}
+  curAxis: {x: 0, y: 0, z: 0}
   curDir: 1
   camRotateSpeed: 1
   curCamRotateAngle: 360

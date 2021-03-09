@@ -165,9 +165,9 @@ public class MapManager : IManager
 
         endlessMapQue.Clear();
         
-        string mapChunkNameStart = "Snow Mountain_Start";
-        string mapChunkNameMiddle = "Snow Mountain_Middle";
-        string mapChunkNameEnd = "Snow Mountain_End";
+        string mapChunkNameStart = "Snow Mountain2_Start";
+        string mapChunkNameMiddle = "Snow Mountain2_Middle";
+        string mapChunkNameEnd = "Snow Mountain2_End";
         
         var mapChunkStart = Resources.Load<GameObject>("Prefabs/Map/" + mapChunkNameStart);  
         var mapChunkMiddle = Resources.Load<GameObject>("Prefabs/Map/" + mapChunkNameMiddle);  
@@ -179,34 +179,18 @@ public class MapManager : IManager
         mapChunkPos = Vector3.zero;
         start.transform.position = mapChunkPos;
         nextChunkPos(ref mapChunkPos);
-        
-        for (int i = 0; i < 1; i++)
-        {
-            var middle =  Object.Instantiate(mapChunkMiddle, mapRoot);
-            middle.transform.position = mapChunkPos;
-            nextChunkPos(ref mapChunkPos);
-            endlessMapQue.Enqueue(middle.transform);
-        }
 
         var mapChunkMiddle2_1 = Resources.Load<GameObject>("Prefabs/Map/Snow Mountain2_Middle1");
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 2; i++)
         {
             var middle =  Object.Instantiate(mapChunkMiddle2_1, mapRoot);
             middle.transform.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
             endlessMapQue.Enqueue(middle.transform);
         }
-        
-        for (int i = 0; i < 1; i++)
-        {
-            var middle =  Object.Instantiate(mapChunkMiddle, mapRoot);
-            middle.transform.position = mapChunkPos;
-            nextChunkPos(ref mapChunkPos);
-            endlessMapQue.Enqueue(middle.transform);
-        }
 
         var mapChunkMiddle2_2 = Resources.Load<GameObject>("Prefabs/Map/Snow Mountain2_Middle2");
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 2; i++)
         {
             var middle =  Object.Instantiate(mapChunkMiddle2_2, mapRoot);
             middle.transform.position = mapChunkPos;
@@ -215,7 +199,7 @@ public class MapManager : IManager
         }
 
         var mapChunkMiddle2_3 = Resources.Load<GameObject>("Prefabs/Map/Snow Mountain2_Middle3");
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 2; i++)
         {
             var middle =  Object.Instantiate(mapChunkMiddle2_3, mapRoot);
             middle.transform.position = mapChunkPos;
