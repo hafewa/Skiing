@@ -126,12 +126,6 @@ public class ICharacter : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             isGround = true;
-
-            if (firstLand)
-            {
-                firstLand = false;
-                rg.AddForce(transform.forward * firstSpeedUpForce);
-            }
             
             rg.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             
@@ -147,6 +141,12 @@ public class ICharacter : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             isGround = true;
+
+            if (m_nRunFrm > 25 && firstLand)
+            {
+                firstLand = false;
+                rg.AddForce(transform.forward * firstSpeedUpForce);
+            }
         }
     }
 

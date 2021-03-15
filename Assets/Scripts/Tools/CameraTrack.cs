@@ -145,7 +145,9 @@ public class CameraTrack : MonoBehaviour
                 }
                 else
                 {
-                    var newPos = target.position - oldVelocity.normalized * curDistance +
+
+                    var middleDir = Vector3.Lerp(-oldVelocity.normalized, Vector3.back, 0.5f);
+                    var newPos = target.position + middleDir * curDistance +
                                  Vector3.up * curHeight / 2;
 
                     transform.position = Vector3.Lerp(transform.position, newPos, dt * 6);

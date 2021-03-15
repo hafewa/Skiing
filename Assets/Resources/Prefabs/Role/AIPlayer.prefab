@@ -2931,7 +2931,7 @@ MonoBehaviour:
   isGameOver: 0
   isGround: 0
   firstLand: 0
-  firstSpeedUpForce: 500
+  firstSpeedUpForce: 1000
   currStateId: 1
   rg: {fileID: 54713675788485540}
   col: {fileID: 65538401198051658}
@@ -2954,7 +2954,7 @@ MonoBehaviour:
   curVelocity: {x: 0, y: 0, z: 0}
   curSpeed: 0
   camRotateFixedSpeed: 0
-  maxSpeed: 75
+  maxSpeed: 45
   mousePosOffset: {x: 0, y: 0}
   curAxis: {x: 0, y: 0, z: 0}
   curDir: 1

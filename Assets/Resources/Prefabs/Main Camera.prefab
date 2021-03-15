@@ -261,8 +261,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EndMoveSpeed: 0.15
-  distance: 9
-  height: 10
+  distance: 7
+  height: 12
   heightDamping: 80
   rotationDamping: 30
 --- !u!114 &114356653654748892
