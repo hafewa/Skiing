@@ -59,6 +59,7 @@ public class ICharacter : MonoBehaviour
     public float curSpeed;
     public float camRotateFixedSpeed;//视角固定的最大速度
     public float maxSpeed = 50;
+    public float maxSpeedUpWithTime;
 
     public Vector2 mousePosOffset = Vector2.zero; //鼠标拖拽位移
 
@@ -184,7 +185,8 @@ public class ICharacter : MonoBehaviour
 
             if (col != null)
             {
-                if (curSpeed > maxSpeed)
+                maxSpeedUpWithTime = maxSpeed * Mathf.Pow(1.13f, m_PassTime / 60);
+                if (curSpeed > maxSpeedUpWithTime)
                 {
                     SetDynamicFriction(curDynamicFriction + Time.deltaTime);
                 }

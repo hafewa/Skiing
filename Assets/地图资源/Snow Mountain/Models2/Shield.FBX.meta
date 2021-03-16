@@ -1,18 +1,16 @@
 fileFormatVersion: 2
-guid: 19e6947a549eb6d42923636694d919cf
-timeCreated: 1614233467
+guid: 722211835cf3c2d4b8e901560be78b85
+timeCreated: 1615881425
 licenseType: Pro
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: 'Material #77'
+    2100000: 'Material #9'
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pj2
-    4300002: pj027
-    9500000: //RootNode
+    4300000: Shield
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -87,7 +85,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

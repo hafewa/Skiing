@@ -1,19 +1,32 @@
 fileFormatVersion: 2
-guid: 19e6947a549eb6d42923636694d919cf
-timeCreated: 1614233467
+guid: 76a2635dad5ffac43aef4777915a9a95
+timeCreated: 1615883879
 licenseType: Pro
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: pCone8
+    100004: pCone9
     400000: //RootNode
-    2100000: 'Material #77'
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pj2
-    4300002: pj027
+    400002: pCone8
+    400004: pCone9
+    2100000: 'Material #25'
+    2300000: pCone8
+    2300002: pCone9
+    3300000: pCone8
+    3300002: pCone9
+    4300000: pCone9
+    4300002: pCone8
+    7400000: Take 001
     9500000: //RootNode
-  externalObjects: {}
+    11100000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #25'
+    second: {fileID: 2100000, guid: e8d89122492a8fd43a3004a79926a234, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -36,14 +49,14 @@ ModelImporter:
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
-    animationWrapMode: 0
+    animationWrapMode: 1
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
@@ -84,10 +97,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

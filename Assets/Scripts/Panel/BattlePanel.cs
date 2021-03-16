@@ -180,7 +180,7 @@ public class BattlePanel : BasePanel
             ? float.MaxValue
             : MathTool.GetZDis(Player.Instance.endTran.position, Player.Instance.transform.position);
 
-        initRank();
+        // initRank();
         InitEncourage();
         ConditionShow();
         RefreshGold();

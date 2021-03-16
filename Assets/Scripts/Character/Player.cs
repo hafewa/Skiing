@@ -175,9 +175,6 @@ public class Player : ICharacter
 
     void CreateAIPlayer()
     {
-        var aiPlayer = Resources.Load<GameObject>("Prefabs/Role/AIPlayer");
-        AIPlayers = new ICharacter[7];
-        AllPlayers = new ICharacter[8];
 
         var skidmarks = Resources.Load<GameObject>("Prefabs/Skidmarks/Skidmarks");
         
@@ -186,6 +183,12 @@ public class Player : ICharacter
         skiingSkid1.iCharater = this;
         skiingSkid1.skidmarksController = sm1;
         this.skidmarks = sm1;
+
+        return;
+        
+        var aiPlayer = Resources.Load<GameObject>("Prefabs/Role/AIPlayer");
+        AIPlayers = new ICharacter[7];
+        AllPlayers = new ICharacter[8];
 
         this.name = "我";
         AllPlayers[7] = this;
