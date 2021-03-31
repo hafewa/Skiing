@@ -33,6 +33,6 @@ public class Left : FSMState
 
     public override void Reason(ICharacter cha = null)
     {
-        cha.StateChange(stateID);
+        // cha.StateChange(stateID);
     }
 }

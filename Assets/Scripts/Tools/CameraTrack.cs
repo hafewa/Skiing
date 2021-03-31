@@ -116,7 +116,7 @@ public class CameraTrack : MonoBehaviour
 
             var oldVelocity = oldVelocityQueue.Peek();
 
-            if (Player.Instance.currStateId == StateID.StartJump)
+            if (Player.Instance.currStateId == StateID.StartJump && false)
             {
                 #region 玩家起跳离地后的镜头环绕效果
 
@@ -139,19 +139,13 @@ public class CameraTrack : MonoBehaviour
             }
             else
             {
-                if (oldVelocity.magnitude < Player.Instance.camRotateFixedSpeed)
-                {
-                    transform.position = pos;
-                }
-                else
-                {
+                var vTemp = -oldVelocity;
+                var oppositeFromV = new Vector3(vTemp.x, 0, vTemp.z);
+                var middleDir = Vector3.Lerp(oppositeFromV.normalized, Vector3.back, 0.5f);
+                var newPos = target.position + middleDir * curDistance +
+                             Vector3.up * curHeight / 2;
 
-                    var middleDir = Vector3.Lerp(-oldVelocity.normalized, Vector3.back, 0.5f);
-                    var newPos = target.position + middleDir * curDistance +
-                                 Vector3.up * curHeight / 2;
-
-                    transform.position = Vector3.Lerp(transform.position, newPos, dt * 6);
-                }
+                transform.position = Vector3.Lerp(transform.position, newPos, dt * 6);
             }
 
             transform.LookAt(target);

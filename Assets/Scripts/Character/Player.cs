@@ -20,8 +20,10 @@ public class Player : ICharacter
     public Transform startTran;
     public Transform endTran;
 
-    public void OnTriggerExit(Collider other)
+    public override void OnTriggerExit(Collider other)
     {
+        base.OnTriggerExit(other);
+        
         if (other.tag == "SpeedUp")
         {
             if (battlePanel == null)
@@ -54,7 +56,12 @@ public class Player : ICharacter
         //吃金币
         if (other.tag == "Gold")
         {
-            other.SetActive(false);
+            var col = other;
+            col.SetActive(false);
+            TimerSvcTool.Instance.AddTimeTask((tid) =>
+            {
+                col.SetActive(true);
+            }, 2, PETimeUnit.Second);
 
             playerData.AddPlayerGold(Random.Range(5, 11));
             
@@ -63,6 +70,16 @@ public class Player : ICharacter
                 battlePanel = GameFacade.Instance.uiMng.GetPanel<BattlePanel>(PanelType.BattlePanel);
             }
             battlePanel.RefreshGold();
+        }
+
+        if (other.tag == "Prop")
+        {
+            other.SetActive(false);
+            if (battlePanel == null)
+            {
+                battlePanel = GameFacade.Instance.uiMng.GetPanel<BattlePanel>(PanelType.BattlePanel);
+            }
+            battlePanel.AddPropCount(other.name);
         }
     }
 

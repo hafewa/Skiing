@@ -179,6 +179,7 @@ public class MapManager : IManager
         mapChunkPos = Vector3.zero;
         start.transform.position = mapChunkPos;
         nextChunkPos(ref mapChunkPos);
+        ShowProp(start.transform);
 
         var mapChunkMiddle2_1 = Resources.Load<GameObject>("Prefabs/Map/Snow Mountain2_Middle1");
         for (int i = 0; i < 1; i++)
@@ -186,6 +187,7 @@ public class MapManager : IManager
             var middle =  Object.Instantiate(mapChunkMiddle2_1, mapRoot);
             middle.transform.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
+            ShowProp(middle.transform);
             endlessMapQue.Enqueue(middle.transform);
         }
 
@@ -195,6 +197,7 @@ public class MapManager : IManager
             var middle =  Object.Instantiate(mapChunkMiddle2_2, mapRoot);
             middle.transform.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
+            ShowProp(middle.transform);
             endlessMapQue.Enqueue(middle.transform);
         }
 
@@ -204,6 +207,7 @@ public class MapManager : IManager
             var middle =  Object.Instantiate(mapChunkMiddle2_3, mapRoot);
             middle.transform.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
+            ShowProp(middle.transform);
             endlessMapQue.Enqueue(middle.transform);
         }
 
@@ -213,6 +217,7 @@ public class MapManager : IManager
             var middle =  Object.Instantiate(mapChunkMiddle2_4, mapRoot);
             middle.transform.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
+            ShowProp(middle.transform);
             endlessMapQue.Enqueue(middle.transform);
         }
 
@@ -222,6 +227,7 @@ public class MapManager : IManager
             var middle =  Object.Instantiate(mapChunkMiddle2_5, mapRoot);
             middle.transform.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
+            ShowProp(middle.transform);
             endlessMapQue.Enqueue(middle.transform);
         }
         
@@ -249,7 +255,28 @@ public class MapManager : IManager
             var middle = endlessMapQue.Dequeue();
             middle.position = mapChunkPos;
             nextChunkPos(ref mapChunkPos);
+            ShowProp(middle);
             endlessMapQue.Enqueue(middle);
+        }
+    }
+
+    /// <summary>
+    /// 显示道具
+    /// </summary>
+    public void ShowProp(Transform mapChunk)
+    {
+        var nodeRoot = mapChunk.Find("Props");
+        if (nodeRoot != null)
+        {
+            for (int i = 0; i < nodeRoot.childCount; i++)
+            {
+                var child = nodeRoot.GetChild(i); 
+                var indexRandom = Random.Range(1, 3);
+                for (int j = 0; j < child.childCount; j++)
+                {
+                    child.GetChild(j).SetActive(indexRandom == j);
+                }
+            }
         }
     }
 }

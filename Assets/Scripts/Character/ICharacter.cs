@@ -1,30 +1,53 @@
 ﻿using System;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ICharacter : MonoBehaviour
 {
+    public ParticleSystem hudun; //道具护盾特效
+    public ParticleSystem SpeedPropEffect; //道具加速特效
+
+    public float heightForJump = 0.5f; //人物离地一定距离进入起跳状态
+
+    public float m_wingHeight = 25;
+    public float m_wingUpForce = 10;
+
+    public float m_wingTime;
+    public float m_wingTimeLast;
+
+    public float m_shieldTime;
+    public float m_shieldHoldTime; //护盾触发后的持续时间
+    public float m_shieldTimeLast;
+    public bool m_isShieldUsed = true;
+
+    public Transform PropStateShow;
+
+    public float m_speedUpForce = 100; //加速道具加速的的力
+    public float m_speedUpTime;
+    public float m_speedUpTimeLast;
+
     public int m_nRunFrm = 0;
-    
+
     public int SpeedUpGold;
-    
+
     public Skidmarks skidmarks;
     public ParticleSystem LandingEff;
     public ParticleSystem DieEff;
     public ParticleSystem SpeedLine;
-    
-    public int m_nPos = 0;  //AllPlayers的index索引
-    
-    public Renderer _bodyRenderer;    //身体渲染
-    public Renderer _skiRenderer;    //滑板渲染
-    
+
+    public int m_nPos = 0; //AllPlayers的index索引
+
+    public Renderer _bodyRenderer; //身体渲染
+    public Renderer _skiRenderer; //滑板渲染
+
     public float m_PassTime = 0;
 
     public bool isDie = false;
     public bool isStart = false;
     public bool isGameOver = false;
     public bool isGround;
-    public bool firstLand;//第一次落地标记
+    public bool firstLand; //第一次落地标记
 
     public float firstSpeedUpForce = 300;
 
@@ -57,7 +80,6 @@ public class ICharacter : MonoBehaviour
     public float curDynamicFriction;
     public Vector3 curVelocity;
     public float curSpeed;
-    public float camRotateFixedSpeed;//视角固定的最大速度
     public float maxSpeed = 50;
     public float maxSpeedUpWithTime;
 
@@ -88,6 +110,44 @@ public class ICharacter : MonoBehaviour
         get { return GameFacade.Instance.dataMng.stageData; }
     }
 
+    public virtual void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Obstacle")
+        {
+            var ani = other.transform.parent.GetComponent<Animation>();
+            if (ani != null)
+            {
+                var collider = other;
+                var animStr = "Take 001";
+                AnimationState state = ani[animStr];
+                state.enabled = true;
+                ani.Play(animStr);
+                TimerSvcTool.Instance.AddTimeTask((tid) =>
+                {
+                    // Debug.Log("qqqqqqqqqqqqqqqqq");
+                    if (ani != null)
+                    {
+                        ani.Play(animStr);
+                        state.time = 0;
+                        ani.Sample();
+                        state.enabled = false;
+                    }
+
+                    if (collider != null)
+                    {
+                        collider.isTrigger = false;
+                    }
+                }, 3, PETimeUnit.Second);
+            }
+
+            if (!m_isShieldUsed && m_shieldTimeLast > 0)
+            {
+                m_isShieldUsed = true;
+                m_shieldTimeLast = m_shieldHoldTime;
+            }
+        }
+    }
+
     public virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "End")
@@ -98,7 +158,11 @@ public class ICharacter : MonoBehaviour
         if (other.tag == "SpeedUp")
         {
             var PassStageCount = Player.Instance.stageData.m_PassStageCount;
-            SpeedUpGold += (int)(Random.Range(4,12) * MathTool.GetSpeedUpGold(PassStageCount));
+            SpeedUpGold += (int) (Random.Range(4, 12) * MathTool.GetSpeedUpGold(PassStageCount));
+        }
+
+        if (other.tag == "Obstacle")
+        {
         }
     }
 
@@ -127,15 +191,13 @@ public class ICharacter : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             isGround = true;
-            
+
             rg.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-            
-            if (currStateId != StateID.Landing && (currStateId == StateID.Ready || currStateId == StateID.StartJump))
-            {
-                fsm.PerformTransition(Transition.Landing);
-            }
         }
     }
+
+    public bool isbottomUp; //人物是否颠倒
+    public float bottomUpTime; //人物颠倒时间
 
     public virtual void OnCollisionStay(Collision collision)
     {
@@ -143,11 +205,29 @@ public class ICharacter : MonoBehaviour
         {
             isGround = true;
 
+            //开局落地加速
             if (m_nRunFrm > 25 && firstLand)
             {
                 firstLand = false;
                 rg.AddForce(transform.forward * firstSpeedUpForce);
             }
+
+            if (currStateId == StateID.Ready || currStateId == StateID.StartJump)
+            {
+                fsm.PerformTransition(Transition.Landing);
+            }
+
+            //人物是否颠倒
+            var axisXangle = transform.eulerAngles.x;
+            isbottomUp = (axisXangle > 50 || axisXangle < -50);
+
+            //速度降低后的恢复
+            // if (m_nRunFrm > 250 && curSpeed < 20)
+            // {
+            //     curfirstSpeedUpForce += Time.deltaTime;
+            //     rg.AddForce(Vector3.forward *
+            //                 (curfirstSpeedUpForce > firstSpeedUpForce ? firstSpeedUpForce : curfirstSpeedUpForce));
+            // }
         }
     }
 
@@ -156,37 +236,48 @@ public class ICharacter : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             isGround = false;
-            
+
             rg.constraints = RigidbodyConstraints.FreezeRotation;
-            
-            
-            if (currStateId != StateID.StartJump && rg.velocity.y > 0)
-            {
-                // Debug.LogFormat("OnCollisionExit Terrain, rg.velocity: {0}",rg.velocity);
-                fsm.PerformTransition(Transition.StartJump);
-            }
+
+            isbottomUp = false;
         }
     }
 
     protected virtual void FixedUpdate()
     {
+        // rg.centerOfMass = transform.position;
+
+        var dt = Time.deltaTime;
         fsm.Update(this);
 
         if (isStart && !isDie)
         {
             m_nRunFrm++;
             m_PassTime += Time.deltaTime;
-            
+
+            if (isbottomUp)
+            {
+                bottomUpTime += dt;
+                if (bottomUpTime > 1f)
+                {
+                    fsm.PerformTransition(Transition.Die);
+                }
+            }
+            else
+            {
+                bottomUpTime = 0;
+            }
+
             if (rg != null)
             {
                 curVelocity = rg.velocity;
                 curSpeed = curVelocity.magnitude;
             }
 
+            maxSpeedUpWithTime = maxSpeed * Mathf.Pow(1.13f, m_PassTime / 60);
             if (col != null)
             {
-                maxSpeedUpWithTime = maxSpeed * Mathf.Pow(1.13f, m_PassTime / 60);
-                if (curSpeed > maxSpeedUpWithTime)
+                if (curSpeed > maxSpeedUpWithTime && isGround)
                 {
                     SetDynamicFriction(curDynamicFriction + Time.deltaTime);
                 }
@@ -205,10 +296,8 @@ public class ICharacter : MonoBehaviour
                             break;
                     }
                 }
-                
-                curDynamicFriction = col.material.dynamicFriction;
             }
-            
+
             //左右速度超过最大值时,停止施加力
             if ((rg.velocity.x < -horizontalVelocityMax && curHorizontalForce < 0) ||
                 (rg.velocity.x > horizontalVelocityMax && curHorizontalForce > 0))
@@ -232,6 +321,70 @@ public class ICharacter : MonoBehaviour
             else
             {
                 curStopForce = 0;
+            }
+
+            //加速状态
+            if (m_speedUpTimeLast > 0)
+            {
+                m_speedUpTimeLast -= Time.deltaTime;
+
+                if (curSpeed < maxSpeedUpWithTime * 1.5f)
+                {
+                    rg.AddForce(Vector3.forward * m_speedUpForce);
+                }
+
+                SetCannotDie();
+            }
+
+            //格挡一次状态
+            if (m_shieldTimeLast > 0 && !m_isShieldUsed)
+            {
+                m_shieldTimeLast -= dt;
+
+                SetCannotDie();
+            }
+
+            if (m_shieldTimeLast < 0 && m_speedUpTimeLast < 0)
+            {
+                SetCanDie();
+            }
+
+            //飞行状态
+            if (m_wingTimeLast > 0)
+            {
+                m_wingTimeLast -= dt;
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 100))
+                {
+                    if (Vector3.Distance(transform.position, hit.point) < m_wingHeight)
+                    {
+                        rg.AddForce(Vector3.up * m_wingUpForce);
+                    }
+                }
+            }
+
+            if (!isGround)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
+                {
+                    //人物在空中固定x轴的角度范围
+                    if (Vector3.Distance(transform.position, hit.point) > 2)
+                    {
+                        var curXAngle = Mathf.Clamp(transform.eulerAngles.x, -20f, 0f);
+                        var axisXAngle = Mathf.Lerp(transform.eulerAngles.x, Vector3.Angle(Vector3.up, hit.normal), dt);
+                        transform.rotation = Quaternion.Euler(axisXAngle, 0, 0);
+                        // print("qqqqqqqqqqqqqq:" + hit.normal);
+                        // print("Angle:" + Vector3.Angle(Vector3.up, hit.normal));
+                    }
+
+                    //人物离地一定距离进入起跳状态
+                    if (currStateId != StateID.StartJump &&
+                        Vector3.Distance(transform.position, hit.point) > heightForJump)
+                    {
+                        fsm.PerformTransition(Transition.StartJump);
+                    }
+                }
             }
         }
     }
@@ -280,7 +433,8 @@ public class ICharacter : MonoBehaviour
         FSMState landing = new Landing(fsm);
         AddAllTransition(landing);
 
-        fsm.AddStates(ready, left, forward, up, down, right, die, speedUp, jump, show, showSpeedUp, startJump, landing); //加入状态机
+        fsm.AddStates(ready, left, forward, up, down, right, die, speedUp, jump, show, showSpeedUp, startJump,
+            landing); //加入状态机
     }
 
     void AddAllTransition(FSMState fSMState)
@@ -332,8 +486,15 @@ public class ICharacter : MonoBehaviour
 
     public virtual void Ready()
     {
+        m_wingTimeLast = 0;
+        m_speedUpTimeLast = 0;
+        m_shieldTimeLast = 0;
+
+        isbottomUp = false;
+        bottomUpTime = 0;
+
         m_nRunFrm = 0;
-        
+
         rg.velocity = Vector3.zero;
         rg.useGravity = false;
         rg.isKinematic = true;
@@ -347,11 +508,12 @@ public class ICharacter : MonoBehaviour
         m_PassTime = 0;
 
         mousePosOffset = Vector2.zero;
-        
+
         skidmarks?.ClearSkid();
-        
+
         SpeedUpGold = 0;
         SetLocalEulerAngles(Vector3.zero);
+        SetDynamicFriction(forwardDynamicFriction);
     }
 
     public virtual void Die()
@@ -391,14 +553,14 @@ public class ICharacter : MonoBehaviour
 
     public virtual void Jump()
     {
-        
     }
 
     public Vector3 curAxis;
-    public float curDir = 1;//相机环绕顺逆时针切换
-    public float camRotateSpeed = 10;//相机环绕角速度
-    public float curCamRotateAngle = 0;//相机当前环绕角度
-    public float maxCamRotateAngle = 60;//最大环绕角度
+    public float curDir = 1; //相机环绕顺逆时针切换
+    public float camRotateSpeed = 10; //相机环绕角速度
+    public float curCamRotateAngle = 0; //相机当前环绕角度
+    public float maxCamRotateAngle = 60; //最大环绕角度
+
     public virtual void StartJump()
     {
         curCamRotateAngle = 0;
@@ -413,6 +575,8 @@ public class ICharacter : MonoBehaviour
     void SetDynamicFriction(float dynamicFriction)
     {
         col.material.dynamicFriction = dynamicFriction;
+
+        curDynamicFriction = col.material.dynamicFriction;
     }
 
     /// <summary>
@@ -504,12 +668,119 @@ public class ICharacter : MonoBehaviour
     {
         _bodyRenderer.material.SetTexture("_MainTex",
             Resources.Load<Texture>("Textures/Body/" + String.Format("HX_{0:D3}_body_col", skinIndex)));
-            
+
         _skiRenderer.material.SetTexture("_MainTex",
             Resources.Load<Texture>("Textures/Skis/" + String.Format("ban-{0:D3}-uv", skinIndex)));
     }
 
-    public void SetLocalEulerAngles(Vector3 vector3) {
+    public void SetLocalEulerAngles(Vector3 vector3)
+    {
         transform.localEulerAngles = vector3;
+    }
+
+    public void LeavePropState()
+    {
+        if (PropStateShow != null)
+        {
+            for (int i = 0; i < PropStateShow.childCount; i++)
+            {
+                var child = PropStateShow.GetChild(i);
+                child.SetActive(false);
+            }
+        }
+    }
+
+    public void EnterPropState(string propName, float propStateTime)
+    {
+        switch (propName)
+        {
+            case "SpeedUp":
+                m_speedUpTimeLast = propStateTime;
+
+
+                SpeedLine.Play();
+                SpeedPropEffect.Play();
+                
+                TimerSvcTool.Instance.AddTimeTask((tid) =>
+                {
+                    SpeedLine.Stop();
+                    SpeedPropEffect.Stop();
+
+                    SpeedLine.Clear();
+                    SpeedPropEffect.Clear();
+                }, propStateTime, PETimeUnit.Second);
+
+                audioMng.PlayAudioEffect(MusicType.SpeedUp);
+                audioMng.PlayAudioEffect(MusicType.Wind);
+
+                break;
+            case "Shield":
+                m_shieldTimeLast = propStateTime;
+                m_isShieldUsed = false;
+
+                hudun.Play();
+                TimerSvcTool.Instance.AddTimeTask((tid) =>
+                {
+                    hudun.Stop();
+                    hudun.Clear();
+                }, propStateTime, PETimeUnit.Second);
+                break;
+            case "Wing":
+                m_wingTimeLast = propStateTime;
+                break;
+            default:
+
+                break;
+        }
+
+        if (PropStateShow != null)
+        {
+            for (int i = 0; i < PropStateShow.childCount; i++)
+            {
+                var child = PropStateShow.GetChild(i);
+                child.SetActive(child.name == propName);
+                if (child.name == propName)
+                {
+                    child.DOPunchScale(Vector3.one * 0.2f, propStateTime, 5);
+                }
+            }
+        }
+    }
+
+    void SetCannotDie()
+    {
+        Collider[] colliders =
+            Physics.OverlapSphere(transform.position, 10);
+
+        if (colliders.Length != 0)
+        {
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                // print("tag:"+colliders[i].tag);
+                if (colliders[i].tag == "Obstacle")
+                {
+                    colliders[i].isTrigger = true;
+                }
+            }
+        }
+    }
+
+    void SetCanDie()
+    {
+        Collider[] colliders =
+            Physics.OverlapSphere(transform.position, 10);
+
+        if (colliders.Length != 0)
+        {
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                var ani = colliders[i].GetComponent<Animation>();
+                // print("tag:"+colliders[i].tag);
+                if (colliders[i].tag == "Obstacle" && (ani == null || !ani.isPlaying))
+                {
+                    colliders[i].isTrigger = false;
+                }
+            }
+        }
     }
 }
